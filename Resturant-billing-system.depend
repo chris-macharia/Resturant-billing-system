@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1670404015 source:c:\users\admin\desktop\resturant-billing-system\main.c
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+
