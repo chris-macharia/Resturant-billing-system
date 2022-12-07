@@ -50,6 +50,7 @@ int main()
     printf("\n3.Search Invoice");
     printf("\n4.Exit");
 
+    printf("\n\nPlease select your prefered operation");
     printf("\n\n");
 
     return 0;
