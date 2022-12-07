@@ -45,10 +45,12 @@ void generateBillFooter(float total){
 int main()
 {
     printf("\t======= ADV. RESTURSANT =======");
-    printf("\n1.Generate Invoice");
+    printf("\n\n1.Generate Invoice");
     printf("\n2.Show all Invoices");
     printf("\n3.Search Invoice");
     printf("\n4.Exit");
+
+    printf("\n\n");
 
     return 0;
 }
