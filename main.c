@@ -61,6 +61,7 @@ int main()
     float total;
     struct orders ord; //orders as ord
     char saveBill='y';
+    struct orders  order;
     FILE *fp;
 
 
@@ -79,57 +80,81 @@ int main()
     switch(opt)
     {
     case 1:
-    system("cls");
-    printf(" \n Please enter the name of the customer\t");
-    fgets(ord.customer,50, stdin);
-    ord.customer[strlen(ord.customer)-1] = 0;//to remove the \n at the end of the input
-    strcpy(ord.date, __DATE__); //Sets the date
-    printf("\n Please enter the number of items:\t");
-    scanf("%d",&n);
-    ord.numOfItems = n;
+        system("cls"); /*notice that this command depends on the system*/
+        printf(" \n Please enter the name of the customer\t");
+        fgets(ord.customer,50, stdin);
+        ord.customer[strlen(ord.customer)-1] = 0;//to remove the \n at the end of the input
+        strcpy(ord.date, __DATE__); //Sets the date
+        printf("\n Please enter the number of items:\t");
+        scanf("%d",&n);
+        ord.numOfItems = n;
 
-        for(int i=0; i<n; i++)
+            for(int i=0; i<n; i++)
+            {
+            fgetc(stdin);
+            printf("\n\n");
+            printf("Please enter the item %d: ", i+1);
+            fgets(ord.itm[i].item, 20,stdin);
+            printf("\nPlease enter the quantity:\t");
+            scanf("%d", &ord.itm[i].qty);
+            printf("\nPlease enter the unit price: \t");
+            scanf("%f", &ord.itm[i].price);
+            total += ord.itm[i].qty * ord.itm[i].price;
+            }
+
+        generateBillsHeader(ord.customer,ord.date);
+        for(int i=0;i<ord.numOfItems;i++)
         {
-        fgetc(stdin);
-        printf("\n\n");
-        printf("Please enter the item %d: ", i+1);
-        fgets(ord.itm[i].item, 20,stdin);
-        printf("\nPlease enter the quantity:\t");
-        scanf("%d", &ord.itm[i].qty);
-        printf("\nPlease enter the unit price: \t");
-        scanf("%f", &ord.itm[i].price);
-        total += ord.itm[i].qty * ord.itm[i].price;
+        generateBillBody(ord.itm[i].item, ord.itm[i].qty, ord.itm[i].price);
         }
+        generateBillFooter(total);
 
-    generateBillsHeader(ord.customer,ord.date);
-    for(int i=0;i<ord.numOfItems;i++)
-    {
-    generateBillBody(ord.itm[i].item, ord.itm[i].qty, ord.itm[i].price);
-    }
-    generateBillFooter(total);
+        /*Saving the invoice*/
+        printf("\n Do you want to save the invoice:[y/n ]\t");
+        scanf("%s", &saveBill);
 
-    /*Saving the invoice*/
-    printf("\n Do you want to save the invoice:[y/n ]\t");
-    scanf("%s", &saveBill);
-
-    if (saveBill == 'y')
-    {
-        fp = fopen("ResturantBill.dat", "a+");
-        fwrite(&ord, sizeof(struct orders), 1, fp);
-        if (fwrite != 0)
+        if (saveBill == 'y')
         {
-            printf("\nSuccessfully saved");
+            fp = fopen("ResturantBill.dat", "a+");
+            fwrite(&ord, sizeof(struct orders), 1, fp);
+            if (fwrite != 0)
+            {
+                printf("\nSuccessfully saved");
+            }
+            else
+            {
+                printf("\nError saving");
+                fclose(fp);
+            }
         }
-        else
-        {
-            printf("\nError saving");
-            fclose(fp);
-        }
-
-    }
     break;
 
+    case 2:
+        /*Showing all the invoices*/
+        system("cls");
+        fp = fopen("ResturantBill.dat", "r");
+        printf("\n ********Your previous Invoices******\n");
+
+        while(fread(&order, sizeof(struct orders), 1, fp))
+        {
+            float tot = 0;
+            generateBillsHeader(order.customer, order.date);
+            for(int i=0; i<order.numOfItems; i++)
+            {
+                generateBillBody(order.itm[i].item, order.itm[i].qty, order.itm[i].price);
+                tot+=order.itm[i].qty * order.itm[i].price;
+            }
+            generateBillFooter(tot);
+        }
+        fclose(fp);
+    break;
+
+
+
     }
+
+
+
     printf("\n\n");
 
     return 0;
