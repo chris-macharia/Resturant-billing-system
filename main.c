@@ -79,6 +79,7 @@ int main()
     switch(opt)
     {
     case 1:
+    system("cls");
     printf(" \n Please enter the name of the customer\t");
     fgets(ord.customer,50, stdin);
     ord.customer[strlen(ord.customer)-1] = 0;//to remove the \n at the end of the input
@@ -108,7 +109,7 @@ int main()
     generateBillFooter(total);
 
     /*Saving the invoice*/
-    printf("\n Do you want to save the invoice:\t");
+    printf("\n Do you want to save the invoice:[y/n ]\t");
     scanf("%s", &saveBill);
 
     if (saveBill == 'y')
