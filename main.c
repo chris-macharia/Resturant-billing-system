@@ -65,7 +65,7 @@ int main()
     char name[50];
     FILE *fp;
 
-    while(loop == 'y')
+    while(loop == 'y') /*To loop through the program*/
     {
         system("cls");
         total = 0;
@@ -154,6 +154,7 @@ int main()
             fclose(fp);
         break;
         case 3:
+            /*To search the invoices*/
             printf("\nEnter the name of the customer:\t");
             fgets(name,50,stdin);
             name[strlen(name)-1] = 0;
@@ -184,6 +185,7 @@ int main()
             fclose(fp);
         break;
         case 4:
+            /*To exit*/
             printf("\n\t\t Bye Bye :)\n\n");
             exit(0);
         break;
@@ -195,9 +197,7 @@ int main()
         printf("\nDo you want to perform another operation?[y/n]: \t");
         scanf("%s",&loop);
     }
-
-
-
+     /*Exit the loop*/
 
     printf("\n\n");
     printf("\n\t\t Bye Bye :)\n\n");
