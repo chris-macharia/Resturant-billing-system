@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1670557071 source:c:\users\admin\desktop\resturant-billing-system\main.c
+1670596198 source:c:\users\admin\desktop\resturant-billing-system\main.c
 	<stdio.h>
 	<string.h>
 	<stdlib.h>
